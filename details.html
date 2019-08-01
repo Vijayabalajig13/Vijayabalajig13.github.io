@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel = "icon" type = "image/png" href = "titlebar1.png">
+       <!-- For apple devices -->
+       <link rel = "apple-touch-icon" type = "image/png" href = "titlebar1.png"/>
+       <link rel="stylesheet" href="details.css"/>
+       <title>Country Description</title>
+    </head>
+    <style>
+  a:link, a:visited {
+  background-color: white;
+  color: black;
+  padding: 14px 25px;
+  text-align: center; 
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: black;
+  color: white;
+}
+    </style>
+    <body onload="onLoad()">
+        <center><div>
+        <img id="image" style="width: 20%"></img>
+       <!-- Display country details -->  
+        <p>Name:<span id="name"></span></p>
+        <p>Region:<span id="reg"></span></p>
+        <p>SubRegion:<span id="subreg"></span></p>
+        <p>Capital:<span id="cap"></span></p>
+        <p>Population:<span id="pop"></span></p>
+        <p>Languages:<span id="lang"></span></p>
+        <p>Area:<span id="area"></span></p>
+        <p>TimeZones:<span id="time"></span></p>
+        <p>Numeric Code:<span id="code"></span></p>
+        <p>Currencies:<span id="currency"></span></p>
+        <p>RegionalBlocs:<span id="blocs"></span></p>
+    
+    </div>
+</center>
+<script>
+  function onLoad() {
+    var session = sessionStorage.getItem("session");
+//if session value is zero it will redirect to index.html
+if(session==0){
+  window.location="index.html";
+}
+  //retrieving the json object stored in html5 local storage
+   var data = localStorage.getItem('jsonData');
+   //parsing and getting the values
+   var jsonData = JSON.parse(data);
+   var x="";
+   for (i = 0; i < jsonData[0].languages.length; i++) {
+   x += jsonData[0].languages[i].name ;
+   if(i<(jsonData[0].languages.length)-1)
+   x+=",";
+    }
+                
+document.getElementById("lang").innerHTML = x;
+document.getElementById("image").src = jsonData[0].flag;
+document.getElementById("area").innerHTML=jsonData[0].area;
+document.getElementById("time").innerHTML=jsonData[0].timezones[0];
+document.getElementById("code").innerHTML=jsonData[0].numericCode;
+document.getElementById("currency").innerHTML=jsonData[0].currencies[0].name;
+document.getElementById("name").innerHTML=jsonData[0].name;
+document.getElementById("reg").innerHTML=jsonData[0].region;
+document.getElementById("subreg").innerHTML=jsonData[0].subregion;
+document.getElementById("cap").innerHTML=jsonData[0].capital;
+document.getElementById("pop").innerHTML=jsonData[0].population;
+try{
+    document.getElementById("blocs").innerHTML=jsonData[0].regionalBlocs[0].name;
+}
+catch(err){
+    document.getElementById("blocs").innerHTML="NOT AVAILABLE";
+
+}
+              
+   }
+      </script>
+      <center> <a href="index.html">Back</a>
+    </center> 
+    </body>    
+</html>
